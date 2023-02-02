@@ -27,9 +27,10 @@ export default function App() {
       ) : isLoading || isLo ? (
         <>Loading...</>
       ) : dealCards || drawCards || shuffleCards ? (
-        <div>
-          {/* <h2>VIDEO POKER</h2> */}
-          <img src={jacks} alt="..." />
+        <div className="flex min-h-screen flex-col place-items-center bg-blue-950 text-center	font-medium text-white portrait:origin-center portrait:rotate-90">
+          <div className="mb-8 flex justify-center">
+            <img src={jacks} alt="..." className="" />
+          </div>
           {dealDrawState ? <DrawCards /> : <DealCards />}
         </div>
       ) : null}

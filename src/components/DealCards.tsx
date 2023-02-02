@@ -57,19 +57,19 @@ const DealCards = () => {
   ];
 
   return (
-    <div>
-      <div className="grid-container">
+    <div className="w-9/12">
+      <div className="mb-8 grid grid-cols-5 gap-2">
         {POSITION.map((spot, index) => (
-          <div className="grid-child" key={index}>
+          <div className="mx-auto" key={index}>
             {spot.hold ? (
               <>
                 <p>HELD</p>
-                <img src={`${spot.delt}`} alt="..." />
+                <img src={`${spot.delt}`} alt="..." className="mt-2" />
               </>
             ) : (
               <>
                 <p>💛</p>
-                <img src={`${spot.drawn}`} alt="..." />
+                <img src={`${spot.drawn}`} alt="..." className="mt-2" />
               </>
             )}
           </div>
@@ -77,6 +77,7 @@ const DealCards = () => {
       </div>
       <div>
         <button
+          className="w-35 rounded border-4 border-r-yellow-700 border-l-yellow-600 border-b-yellow-700 bg-yellow-500 py-2 px-4 font-bold text-black hover:border-gray-500 hover:bg-yellow-400"
           onClick={() => {
             // eslint-disable-next-line no-sequences
             reShuffle(),
