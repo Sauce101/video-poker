@@ -3,11 +3,13 @@ import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { deckOfCardsApi } from '../api/apiSlice';
 import dealDrawReducer from '../features/dealDrawSlice';
 import holdCardOneReducer from '../features/holdOneSlice';
+import rotateReducer from '../features/rotateSlice';
 
 export const store = configureStore({
   reducer: {
     dealDraw: dealDrawReducer,
     holdCardOne: holdCardOneReducer,
+    rotate: rotateReducer,
     // Add the generated reducer as a specific top-level slice
     [deckOfCardsApi.reducerPath]: deckOfCardsApi.reducer,
   },

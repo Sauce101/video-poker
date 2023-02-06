@@ -11,46 +11,44 @@ interface Cards {
   success: boolean;
   deck_id: string;
   cards: {
-    image: {
-      code: string;
-      image: string;
-      images: { svg: string; png: string };
-      value: string;
-      suit: string;
-    };
+    code: string;
+    image: string;
+    images: { svg: string; png: string };
+    value: string;
+    suit: string;
   }[];
   remaining: number;
 }
 
-// Define a service using a base URL and expected endpoints r339fn3cjv3b 4o2icvecv03r -jokers
+// Define a service using a base URL and expected endpoints  4o2icvecv03r -jokers wn9ob613ltvc
 export const deckOfCardsApi = createApi({
   reducerPath: 'deckOfCardsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://deckofcardsapi.com/api/deck/r339fn3cjv3b/',
+    baseUrl: 'https://deckofcardsapi.com/api/deck/wn9ob613ltvc/',
   }),
-  tagTypes: ['cards', 'remaining'],
+  tagTypes: ['Deal', 'Draw', 'Shuffle'],
   endpoints: (builder) => ({
     shuffleCards: builder.query<Shuffle, void>({
       query: () => 'shuffle/?deck_count=1',
-      providesTags: ['remaining'],
+      providesTags: ['Shuffle'],
     }),
     reShuffleCards: builder.mutation<Shuffle, void>({
       query: () => 'shuffle/',
-      invalidatesTags: ['remaining'],
+      invalidatesTags: ['Shuffle'],
     }),
     dealCards: builder.query<Cards, void>({
       query: () => 'draw/?count=5',
-      providesTags: ['cards'],
+      providesTags: ['Deal'],
     }),
     drawCards: builder.query<Cards, void>({
       query: () => 'draw/?count=5',
-      providesTags: ['cards'],
+      providesTags: ['Draw'],
     }),
     dealNextCards: builder.mutation<void, void>({
       query: () => ({
         url: `draw/?count=0`,
       }),
-      invalidatesTags: ['cards'],
+      invalidatesTags: ['Deal', 'Draw'],
     }),
   }),
 });
