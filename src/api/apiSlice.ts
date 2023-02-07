@@ -48,7 +48,7 @@ export const deckOfCardsApi = createApi({
       query: () => ({
         url: `draw/?count=0`,
       }),
-      invalidatesTags: ['Deal', 'Draw'],
+      invalidatesTags: ['Deal', 'Draw', 'Shuffle'],
     }),
   }),
 });

@@ -1,11 +1,10 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-// actions
+// api calls
 import { draw } from '../features/dealDrawSlice';
-import { rotateFalse, rotateTrue } from '../features/rotateSlice';
 import { useDealCardsQuery } from '../api/apiSlice';
+// actions
+import { rotateFalse, rotateTrue } from '../features/rotateSlice';
 import {
   holdOne,
   holdTwo,
@@ -17,23 +16,28 @@ import {
 import redback from '../assets/2B.svg';
 
 const DrawCards = () => {
-  const { data: dealCards } = useDealCardsQuery();
   const dispatch = useAppDispatch();
+  const { data: dealCards } = useDealCardsQuery();
+  // card State
+  const isActive = useAppSelector((state) => state.rotate.value);
+  // hold State
   const holdState1 = useAppSelector((state) => state.holdCardOne.toggleHold1);
   const holdState2 = useAppSelector((state) => state.holdCardOne.toggleHold2);
   const holdState3 = useAppSelector((state) => state.holdCardOne.toggleHold3);
   const holdState4 = useAppSelector((state) => state.holdCardOne.toggleHold4);
   const holdState5 = useAppSelector((state) => state.holdCardOne.toggleHold5);
-  // card State
-  const isActive = useAppSelector((state) => state.rotate.value);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(rotateTrue());
-    }, 200);
+    }, 150);
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
+
+  const drawHand = () => {
+    dispatch(draw());
+    dispatch(rotateFalse());
+  };
 
   const POSITION = [
     {
@@ -88,6 +92,7 @@ const DrawCards = () => {
                 src={`${spot.card}`}
                 alt="..."
                 onClick={() => dispatch(spot.dis)}
+                aria-hidden="true"
               />
             </div>
           </div>
@@ -96,11 +101,8 @@ const DrawCards = () => {
 
       <div>
         <button
-          className="w-40 rounded border-4 border-r-yellow-700 border-l-yellow-600 border-b-yellow-700 bg-yellow-500 py-2 px-4 font-bold text-black hover:border-gray-500 hover:bg-yellow-400"
-          onClick={() => {
-            dispatch(draw());
-            dispatch(rotateFalse());
-          }}
+          className="w-34 rounded border-4 border-r-yellow-700 border-l-yellow-600 border-b-yellow-700 bg-yellow-500 py-2 px-4 font-bold text-black hover:border-gray-500 hover:bg-yellow-400 md:w-40"
+          onClick={drawHand}
         >
           DRAW
         </button>

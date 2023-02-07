@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { deal } from '../features/dealDrawSlice';
-// import { rotateTrue } from '../features/rotateSlice';
+import { rotateFalse, rotateTrue } from '../features/rotateSlice';
 import {
   holdReset1,
   holdReset2,
@@ -19,17 +19,16 @@ import {
 import redback from '../assets/2B.svg';
 
 const DealCards = () => {
-  const [isActive, setActive] = useState(false);
-  const toggleClass = () => {
-    setActive(!isActive);
-  };
-  // const rotateState = useAppSelector((state) => state.rotate.value);
   const dispatch = useAppDispatch();
+  // rtk Queries
   const { data: dealCards } = useDealCardsQuery();
   const { data: drawCards } = useDrawCardsQuery();
   // mutations
   const [reShuffle] = useReShuffleCardsMutation();
   const [dealNext] = useDealNextCardsMutation();
+  // card State
+  const isActive = useAppSelector((state) => state.rotate.value);
+  // hold State
   const holdState1 = useAppSelector((state) => state.holdCardOne.toggleHold1);
   const holdState2 = useAppSelector((state) => state.holdCardOne.toggleHold2);
   const holdState3 = useAppSelector((state) => state.holdCardOne.toggleHold3);
@@ -70,9 +69,11 @@ const DealCards = () => {
   ];
 
   useEffect(() => {
-    toggleClass();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const timer = setTimeout(() => {
+      dispatch(rotateTrue());
+    }, 250);
+    return () => clearTimeout(timer);
+  });
 
   const dealHand = () => {
     reShuffle(),
@@ -82,11 +83,10 @@ const DealCards = () => {
       dispatch(holdReset3()),
       dispatch(holdReset4()),
       dispatch(holdReset5()),
-      dispatch(deal());
+      dispatch(deal()),
+      dispatch(rotateFalse());
   };
 
-  // () => dispatch(rotateTrue());
-  // console.log(rotateState);
   return (
     <div className="scene w-9/12">
       <div className="grid grid-cols-5 gap-2">
@@ -114,7 +114,7 @@ const DealCards = () => {
       </div>
       <div>
         <button
-          className="w-40 rounded border-4 border-r-yellow-700 border-l-yellow-600 border-b-yellow-700 bg-yellow-500 py-2 px-4 font-bold text-black hover:border-gray-500 hover:bg-yellow-400"
+          className="w-34 rounded border-4 border-r-yellow-700 border-l-yellow-600 border-b-yellow-700 bg-yellow-500 py-2 px-4 font-bold text-black hover:border-gray-500 hover:bg-yellow-400 md:w-40"
           onClick={() => dealHand()}
         >
           DEAL
