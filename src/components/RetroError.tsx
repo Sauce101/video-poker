@@ -1,4 +1,4 @@
-import retroError from '../assets/retroError.webp';
+import retroError from '../assets/images/retroError.webp';
 
 const RetroError = () => {
   return (

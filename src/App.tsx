@@ -1,23 +1,18 @@
 import './App.css';
 import { useAppSelector } from './app/hooks';
-import {
-  useDealCardsQuery,
-  useShuffleCardsQuery,
-  useDrawCardsQuery,
-} from './api/apiSlice';
+import { useDealCardsQuery, useShuffleCardsQuery } from './api/apiSlice';
 import DealCards from './components/DealCards';
 import DrawCards from './components/DrawCards';
-import jacks from './assets/jaksPay.webp';
+import jacks from './assets/images/jaksPay.webp';
 import FooterTwo from './components/FooterTwo';
-import rotateScreen from './assets/rotateScreen.png';
+import rotateScreen from './assets/images/rotateScreen.png';
 import RetroLoading from './components/RetroLoading';
 import RetroError from './components/RetroError';
 
 export default function App() {
   // Using a query hook automatically fetches data and returns query values
-  const { data: shuffleCards } = useShuffleCardsQuery();
-  const { data: dealCards, error, isLoading } = useDealCardsQuery();
-  const { data: drawCards } = useDrawCardsQuery();
+  const { data: shuffleCards, error, isLoading } = useShuffleCardsQuery();
+  const { data: dealCards } = useDealCardsQuery();
   // Current State
   const dealDrawState = useAppSelector((state) => state.dealDraw.value);
 
@@ -27,14 +22,19 @@ export default function App() {
         <RetroError />
       ) : isLoading ? (
         <RetroLoading />
-      ) : dealCards || drawCards || shuffleCards ? (
+      ) : // ) : dealCards || drawCards || shuffleCards ? (
+      shuffleCards ? (
         <>
           <div className="flex min-h-screen flex-col place-items-center bg-blue-950	text-center font-medium text-white portrait:hidden">
             <div className="mb-8">
               <img src={jacks} alt="..." className="max-lg:hidden" />
             </div>
             <div className="my-auto mb-auto flex flex-col place-items-center">
-              {dealDrawState ? <DrawCards /> : <DealCards />}
+              {dealDrawState ? (
+                <DrawCards dealCards={dealCards} />
+              ) : (
+                <DealCards dealCards={dealCards} />
+              )}
             </div>
             <FooterTwo />
           </div>

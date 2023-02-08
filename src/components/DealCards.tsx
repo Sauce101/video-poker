@@ -1,3 +1,4 @@
+/* eslint-disable no-sequences */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
@@ -11,18 +12,29 @@ import {
   holdReset5,
 } from '../features/holdOneSlice';
 import {
-  useDealCardsQuery,
   useDealNextCardsMutation,
-  useDrawCardsQuery,
+  // useDrawCardsQuery,
   useReShuffleCardsMutation,
 } from '../api/apiSlice';
-import redback from '../assets/2B.svg';
+import redback from '../assets/images/2B.svg';
 
-const DealCards = () => {
+interface DealProps {
+  success: boolean;
+  deck_id: string;
+  cards: {
+    code: string;
+    image: string;
+    images: { svg: string; png: string };
+    value: string;
+    suit: string;
+  }[];
+  remaining: number;
+}
+
+const DealCards = ({ dealCards }: { dealCards: DealProps | undefined }) => {
   const dispatch = useAppDispatch();
   // rtk Queries
-  const { data: dealCards } = useDealCardsQuery();
-  const { data: drawCards } = useDrawCardsQuery();
+  // const { data: drawCards } = useDrawCardsQuery();
   // mutations
   const [reShuffle] = useReShuffleCardsMutation();
   const [dealNext] = useDealNextCardsMutation();
@@ -39,31 +51,31 @@ const DealCards = () => {
     {
       hold: holdState1,
       delt: dealCards?.cards[0].image,
-      drawn: drawCards?.cards[0].image,
+      drawn: dealCards?.cards[5].image,
       back: redback,
     },
     {
       hold: holdState2,
       delt: dealCards?.cards[1].image,
-      drawn: drawCards?.cards[1].image,
+      drawn: dealCards?.cards[6].image,
       back: redback,
     },
     {
       hold: holdState3,
       delt: dealCards?.cards[2].image,
-      drawn: drawCards?.cards[2].image,
+      drawn: dealCards?.cards[7].image,
       back: redback,
     },
     {
       hold: holdState4,
       delt: dealCards?.cards[3].image,
-      drawn: drawCards?.cards[3].image,
+      drawn: dealCards?.cards[8].image,
       back: redback,
     },
     {
       hold: holdState5,
       delt: dealCards?.cards[4].image,
-      drawn: drawCards?.cards[4].image,
+      drawn: dealCards?.cards[9].image,
       back: redback,
     },
   ];
@@ -76,8 +88,8 @@ const DealCards = () => {
   });
 
   const dealHand = () => {
-    reShuffle(),
-      dealNext(),
+    dealNext(),
+      reShuffle(),
       dispatch(holdReset1()),
       dispatch(holdReset2()),
       dispatch(holdReset3()),
@@ -115,7 +127,7 @@ const DealCards = () => {
       <div>
         <button
           className="w-34 rounded border-4 border-r-yellow-700 border-l-yellow-600 border-b-yellow-700 bg-yellow-500 py-2 px-4 font-bold text-black hover:border-gray-500 hover:bg-yellow-400 md:w-40"
-          onClick={() => dealHand()}
+          onClick={dealHand}
         >
           DEAL
         </button>

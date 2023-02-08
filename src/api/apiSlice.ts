@@ -20,35 +20,31 @@ interface Cards {
   remaining: number;
 }
 
-// Define a service using a base URL and expected endpoints  4o2icvecv03r -jokers wn9ob613ltvc
+// Define a service using a base URL and expected endpoints  4o2icvecv03r -jokers fqxms4ij4tox
 export const deckOfCardsApi = createApi({
   reducerPath: 'deckOfCardsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://deckofcardsapi.com/api/deck/wn9ob613ltvc/',
+    baseUrl: 'https://deckofcardsapi.com/api/deck/fqxms4ij4tox/',
   }),
-  tagTypes: ['Deal', 'Draw', 'Shuffle'],
+  tagTypes: ['Deal', 'Shuffle'],
   endpoints: (builder) => ({
     shuffleCards: builder.query<Shuffle, void>({
       query: () => 'shuffle/?deck_count=1',
       providesTags: ['Shuffle'],
     }),
     reShuffleCards: builder.mutation<Shuffle, void>({
-      query: () => 'shuffle/',
-      invalidatesTags: ['Shuffle'],
+      query: () => 'return/',
+      invalidatesTags: ['Shuffle', 'Deal'],
     }),
     dealCards: builder.query<Cards, void>({
-      query: () => 'draw/?count=5',
+      query: () => 'draw/?count=10',
       providesTags: ['Deal'],
-    }),
-    drawCards: builder.query<Cards, void>({
-      query: () => 'draw/?count=5',
-      providesTags: ['Draw'],
     }),
     dealNextCards: builder.mutation<void, void>({
       query: () => ({
-        url: `draw/?count=0`,
+        url: `draw/?count=10`,
       }),
-      invalidatesTags: ['Deal', 'Draw', 'Shuffle'],
+      invalidatesTags: ['Deal', 'Shuffle'],
     }),
   }),
 });
@@ -60,5 +56,4 @@ export const {
   useReShuffleCardsMutation,
   useDealCardsQuery,
   useDealNextCardsMutation,
-  useDrawCardsQuery,
 } = deckOfCardsApi;

@@ -1,4 +1,4 @@
-import retroLoading from '../assets/retroLoading.jpg';
+import retroLoading from '../assets/images/retroLoading.jpg';
 
 const RetroLoading = () => {
   return (

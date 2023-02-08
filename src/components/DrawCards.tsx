@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-// api calls
-import { draw } from '../features/dealDrawSlice';
-import { useDealCardsQuery } from '../api/apiSlice';
 // actions
+import { draw } from '../features/dealDrawSlice';
 import { rotateFalse, rotateTrue } from '../features/rotateSlice';
 import {
   holdOne,
@@ -13,11 +11,23 @@ import {
   holdFive,
 } from '../features/holdOneSlice';
 // card back
-import redback from '../assets/2B.svg';
+import redback from '../assets/images/2B.svg';
 
-const DrawCards = () => {
+interface DrawProps {
+  success: boolean;
+  deck_id: string;
+  cards: {
+    code: string;
+    image: string;
+    images: { svg: string; png: string };
+    value: string;
+    suit: string;
+  }[];
+  remaining: number;
+}
+
+const DrawCards = ({ dealCards }: { dealCards: DrawProps | undefined }) => {
   const dispatch = useAppDispatch();
-  const { data: dealCards } = useDealCardsQuery();
   // card State
   const isActive = useAppSelector((state) => state.rotate.value);
   // hold State

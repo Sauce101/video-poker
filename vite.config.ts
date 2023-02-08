@@ -12,8 +12,8 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: 'Video Poker',
-        short_name: 'Video Poker',
+        name: 'Video Poker API',
+        short_name: 'Video Poker API',
         start_url: '/',
         display: 'standalone',
         orientation: 'landscape',
