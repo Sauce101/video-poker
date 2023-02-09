@@ -1,4 +1,3 @@
-/* eslint-disable no-sequences */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
@@ -13,7 +12,7 @@ import {
 } from '../features/holdOneSlice';
 import {
   useDealNextCardsMutation,
-  // useDrawCardsQuery,
+  useReturnCardsMutation,
   useReShuffleCardsMutation,
 } from '../api/apiSlice';
 import redback from '../assets/images/2B.svg';
@@ -33,9 +32,8 @@ interface DealProps {
 
 const DealCards = ({ dealCards }: { dealCards: DealProps | undefined }) => {
   const dispatch = useAppDispatch();
-  // rtk Queries
-  // const { data: drawCards } = useDrawCardsQuery();
   // mutations
+  const [returnCards] = useReturnCardsMutation();
   const [reShuffle] = useReShuffleCardsMutation();
   const [dealNext] = useDealNextCardsMutation();
   // card State
@@ -88,15 +86,16 @@ const DealCards = ({ dealCards }: { dealCards: DealProps | undefined }) => {
   });
 
   const dealHand = () => {
-    dealNext(),
-      reShuffle(),
-      dispatch(holdReset1()),
-      dispatch(holdReset2()),
-      dispatch(holdReset3()),
-      dispatch(holdReset4()),
-      dispatch(holdReset5()),
-      dispatch(deal()),
-      dispatch(rotateFalse());
+    dealNext();
+    returnCards();
+    reShuffle();
+    dispatch(holdReset1());
+    dispatch(holdReset2());
+    dispatch(holdReset3());
+    dispatch(holdReset4());
+    dispatch(holdReset5());
+    dispatch(rotateFalse());
+    dispatch(deal());
   };
 
   return (

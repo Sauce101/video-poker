@@ -40,7 +40,7 @@ const DrawCards = ({ dealCards }: { dealCards: DrawProps | undefined }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(rotateTrue());
-    }, 150);
+    }, 200);
     return () => clearTimeout(timer);
   });
 
@@ -112,7 +112,7 @@ const DrawCards = ({ dealCards }: { dealCards: DrawProps | undefined }) => {
       <div>
         <button
           className="w-34 rounded border-4 border-r-yellow-700 border-l-yellow-600 border-b-yellow-700 bg-yellow-500 py-2 px-4 font-bold text-black hover:border-gray-500 hover:bg-yellow-400 md:w-40"
-          onClick={drawHand}
+          onClick={() => drawHand()}
         >
           DRAW
         </button>

@@ -7,6 +7,18 @@ interface Shuffle {
   remaining: number;
 }
 
+interface ReturnCards {
+  success: boolean;
+  deck_id: string;
+  shuffled: boolean;
+  remaining: number;
+  piles: {
+    discard: {
+      remaining: number;
+    };
+  };
+}
+
 interface Cards {
   success: boolean;
   deck_id: string;
@@ -26,25 +38,29 @@ export const deckOfCardsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://deckofcardsapi.com/api/deck/fqxms4ij4tox/',
   }),
-  tagTypes: ['Deal', 'Shuffle'],
+  tagTypes: ['Shuffle', 'Deal'],
   endpoints: (builder) => ({
     shuffleCards: builder.query<Shuffle, void>({
       query: () => 'shuffle/?deck_count=1',
       providesTags: ['Shuffle'],
     }),
-    reShuffleCards: builder.mutation<Shuffle, void>({
+    returnCards: builder.mutation<ReturnCards, void>({
       query: () => 'return/',
-      invalidatesTags: ['Shuffle', 'Deal'],
+      invalidatesTags: ['Shuffle'],
+    }),
+    reShuffleCards: builder.mutation<Shuffle, void>({
+      query: () => 'shuffle/',
+      invalidatesTags: ['Shuffle'],
     }),
     dealCards: builder.query<Cards, void>({
       query: () => 'draw/?count=10',
       providesTags: ['Deal'],
     }),
-    dealNextCards: builder.mutation<void, void>({
+    dealNextCards: builder.mutation<Cards, void>({
       query: () => ({
-        url: `draw/?count=10`,
+        url: `draw/`,
       }),
-      invalidatesTags: ['Deal', 'Shuffle'],
+      invalidatesTags: ['Deal'],
     }),
   }),
 });
@@ -53,6 +69,7 @@ export const deckOfCardsApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useShuffleCardsQuery,
+  useReturnCardsMutation,
   useReShuffleCardsMutation,
   useDealCardsQuery,
   useDealNextCardsMutation,
