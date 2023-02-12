@@ -23,7 +23,7 @@ export default function App() {
         <RetroLoading />
       ) : shuffleCards ? (
         <>
-          <div className="flex min-h-screen flex-col place-items-center bg-[#000ca6]	text-center font-medium text-white portrait:hidden">
+          <div className="flex min-h-screen flex-col place-items-center bg-[#0000bf]	text-center font-medium text-white portrait:hidden">
             <div className="mb-8 flex flex-col place-items-center">
               <img src={payout} alt="..." className="w-3/5 max-lg:hidden" />
             </div>
