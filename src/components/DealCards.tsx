@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { deal } from '../features/dealDrawSlice';
