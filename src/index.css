@@ -35,3 +35,7 @@
   position: relative;
   width: auto;
 }
+
+.play__five {
+  -webkit-text-stroke: 1px yellow;
+}
