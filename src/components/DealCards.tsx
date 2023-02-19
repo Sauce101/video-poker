@@ -89,13 +89,13 @@ const DealCards = ({ dealCards }: { dealCards: DealProps | undefined }) => {
       dispatch(rotateTrue());
     }, 250);
     return () => clearTimeout(timer);
-  });
+  }, []);
   useEffect(() => {
     const timer2 = setTimeout(() => {
       dispatch(fiveCredits());
     }, 800);
     return () => clearTimeout(timer2);
-  });
+  }, []);
 
   const dealHand = () => {
     dealNext();
@@ -133,7 +133,7 @@ const DealCards = ({ dealCards }: { dealCards: DealProps | undefined }) => {
                 <div className={`card mb-8 ${isActive ? 'is-flipped' : null}`}>
                   <div className="card__face card__face--front">
                     <p>&nbsp;</p>
-                    <img src={spot.back} alt="..." className="z-4 mt-2" />
+                    <img src={spot.back} alt="..." className="mt-2" />
                   </div>
                   <div className="card__face card__face--back">
                     <p>&nbsp;</p>

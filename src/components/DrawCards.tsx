@@ -42,7 +42,7 @@ const DrawCards = ({ dealCards }: { dealCards: DrawProps | undefined }) => {
       dispatch(rotateTrue());
     }, 200);
     return () => clearTimeout(timer);
-  });
+  }, []);
 
   const drawHand = () => {
     dispatch(draw());
@@ -91,14 +91,19 @@ const DrawCards = ({ dealCards }: { dealCards: DrawProps | undefined }) => {
             key={index}
           >
             <div className="card__face card__face--front">
-              {spot.hold ? <p>HELD</p> : <p>&nbsp;</p>}
-              <img className="z-4 mt-2" src={spot.back} alt="..." />
+              <p>&nbsp;</p>
+              <img
+                className="mt-2 w-full"
+                src={spot.back}
+                alt="..."
+                aria-hidden="true"
+              />
             </div>
             {/* CARDS */}
             <div className="card__face card__face--back">
               {spot.hold ? <p>HELD</p> : <p>&nbsp;</p>}
               <img
-                className="z-4 mt-2 w-full"
+                className="mt-2"
                 src={`${spot.card}`}
                 alt="..."
                 onClick={() => dispatch(spot.dis)}
