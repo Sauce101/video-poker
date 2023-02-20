@@ -38,5 +38,7 @@
 }
 
 .play__five {
-  -webkit-text-stroke: 1px yellow;
+  /* -webkit-text-stroke: 1px yellow; */
+  text-shadow: -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow,
+    1px 1px 0 yellow;
 }
