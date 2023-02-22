@@ -93,7 +93,7 @@ const DealCards = ({ dealCards }: { dealCards: DealProps | undefined }) => {
   useEffect(() => {
     const timer2 = setTimeout(() => {
       dispatch(fiveCredits());
-    }, 800);
+    }, 1000);
     return () => clearTimeout(timer2);
   }, []);
 

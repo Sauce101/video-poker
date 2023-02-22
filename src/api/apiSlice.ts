@@ -58,7 +58,7 @@ export const deckOfCardsApi = createApi({
     }),
     dealNextCards: builder.mutation<Cards, void>({
       query: () => ({
-        url: `draw/`,
+        url: `draw/?count=10'`,
       }),
       invalidatesTags: ['Deal'],
     }),
