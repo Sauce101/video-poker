@@ -32,16 +32,16 @@ interface Cards {
   remaining: number;
 }
 
-// Define a service using a base URL and expected endpoints  4o2icvecv03r -jokers fqxms4ij4tox
+// Define a service using a base URL and expected endpoints
 export const deckOfCardsApi = createApi({
   reducerPath: 'deckOfCardsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://deckofcardsapi.com/api/deck/fqxms4ij4tox/',
+    baseUrl: 'https://deckofcardsapi.com/api/deck/new/',
   }),
   tagTypes: ['Shuffle', 'Deal'],
   endpoints: (builder) => ({
     shuffleCards: builder.query<Shuffle, void>({
-      query: () => 'shuffle/?deck_count=1',
+      query: () => 'shuffle/',
       providesTags: ['Shuffle'],
     }),
     returnCards: builder.mutation<ReturnCards, void>({
