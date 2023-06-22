@@ -87,7 +87,7 @@ const DealCards = ({ dealCards }: { dealCards: DealProps | undefined }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(rotateTrue());
-    }, 250);
+    }, 400);
     return () => clearTimeout(timer);
   }, []);
   useEffect(() => {
