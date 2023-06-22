@@ -40,7 +40,7 @@ const DrawCards = ({ dealCards }: { dealCards: DrawProps | undefined }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(rotateTrue());
-    }, 200);
+    }, 400);
     return () => clearTimeout(timer);
   }, []);
 
